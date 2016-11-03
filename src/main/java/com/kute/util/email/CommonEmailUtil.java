@@ -1,4 +1,4 @@
-package com.kute.util;
+package com.kute.util.email;
 
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;

@@ -1,4 +1,4 @@
-package com.kute.util;
+package com.kute.util.email;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

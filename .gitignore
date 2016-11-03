@@ -14,3 +14,7 @@ purejavatest.iml
 
 .idea
 /target/
+
+.settings
+.classpath
+.project

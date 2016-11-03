@@ -1,0 +1,63 @@
+package com.kute.util.zip;
+
+import java.io.File;
+
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.taskdefs.Delete;
+import org.apache.tools.ant.taskdefs.Zip;
+import org.apache.tools.ant.types.FileSet;
+
+
+/**
+ * 压缩工具类
+ * @author bl
+ *
+ */
+public class ZipUtil {
+    
+    /** 
+     * 执行压缩操作 
+     * @param srcPathName 需要被压缩的文件/文件夹 
+     */  
+    public static void zip(String srcPathName, String targetZipPath) { 
+        
+        File zipFile = new File(targetZipPath);
+        
+        File srcdir = new File(srcPathName);    
+        if (!srcdir.exists()){  
+            throw new RuntimeException(srcPathName + "不存在！");    
+        }   
+            
+        Project prj = new Project();    
+        Zip zip = new Zip();    
+        zip.setProject(prj);    
+        zip.setDestFile(zipFile);    
+        FileSet fileSet = new FileSet();    
+        fileSet.setProject(prj);    
+        fileSet.setDir(srcdir);    
+        //fileSet.setIncludes("**/*.java"); //包括哪些文件或文件夹 eg:zip.setIncludes("*.java");    
+        //fileSet.setExcludes(...); //排除哪些文件或文件夹    
+        zip.addFileset(fileSet);    
+        zip.execute();   
+    }
+    
+    /**
+     * 删除文件夹
+     * @param dirname
+     */
+    public static void delete(String srcPathName) {
+        File file = new File(srcPathName);
+        if(!file.exists()) {
+            return;
+        }
+        Delete delete = new Delete();
+        Project project = new Project();
+        project.init();
+        delete.setProject(project);
+        delete.setTaskName("delete");
+        delete.setTaskType("delete");
+        delete.setDir(file);
+        delete.execute();
+    }
+    
+}

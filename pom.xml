@@ -50,11 +50,25 @@
 
 
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>0.10.1.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.41</version>
 		</dependency>
 
 		<!-- common -->
@@ -184,11 +198,6 @@
 			<version>${spring.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		<!--<dependency> -->
-		<!--<groupId>com.caucho</groupId> -->
-		<!--<artifactId>hessian</artifactId> -->
-		<!--<version>4.0.33</version> -->
-		<!--</dependency> -->
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
@@ -231,6 +240,18 @@
 			</exclusions>
 		</dependency>
 
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>3.9.1</version>
+            <scope>test</scope>
+        </dependency>
+
 	</dependencies>
 
 	<build>
@@ -240,8 +261,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<encoding>utf-8</encoding>
 					<fork>true</fork>
 					<meminitial>512m</meminitial>

@@ -21,7 +21,7 @@ public class SimpleEmailUtil {
     private static String host;
     private static String port;
 
-    private static  Properties props = new Properties();
+    private static Properties props = new Properties();
 
 
     static {
@@ -36,12 +36,12 @@ public class SimpleEmailUtil {
         //设置参数
         props = new Properties();
         props.setProperty("mail.smtp.auth", rb.getString("mail.smtp.auth"));
-        props.setProperty("mail.smtp.starttls.enable",rb.getString("mail.smtp.starttls.enable"));
+        props.setProperty("mail.smtp.starttls.enable", rb.getString("mail.smtp.starttls.enable"));
         props.setProperty("mail.smtp.host", host);
         props.setProperty("mail.smtp.port", port);
         props.setProperty("mail.smtp.ssl.enable", "true");
         props.setProperty("mail.smtp.ssl.trust", host);
-        props.setProperty("mail.smtp.ssl.checkserveridentity","false");
+        props.setProperty("mail.smtp.ssl.checkserveridentity", "false");
     }
 
     public static boolean sendEmail() throws Exception {
@@ -49,6 +49,7 @@ public class SimpleEmailUtil {
         //获取session对象
         Session session = Session.getInstance(props,
                 new Authenticator() {
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
@@ -87,11 +88,6 @@ public class SimpleEmailUtil {
 
         return true;
     }
-
-
-
-
-
 
 
     public static void main(String[] args) throws Exception {

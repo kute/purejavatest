@@ -1,0 +1,3 @@
+{
+    "codec": "org.redisson.codec.JsonJacksonCodec"
+}

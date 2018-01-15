@@ -9,15 +9,15 @@ import org.apache.tools.ant.types.FileSet;
 
 
 /**
- * Ñ¹Ëõ¹¤¾ßÀà
+ * Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @author bl
  *
  */
 public class ZipUtil {
     
     /** 
-     * Ö´ÐÐÑ¹Ëõ²Ù×÷ 
-     * @param srcPathName ÐèÒª±»Ñ¹ËõµÄÎÄ¼þ/ÎÄ¼þ¼Ð 
+     * Ö´ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+     * @param srcPathName ï¿½ï¿½Òªï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½/ï¿½Ä¼ï¿½ï¿½ï¿½ 
      */  
     public static void zip(String srcPathName, String targetZipPath) { 
         
@@ -25,7 +25,7 @@ public class ZipUtil {
         
         File srcdir = new File(srcPathName);    
         if (!srcdir.exists()){  
-            throw new RuntimeException(srcPathName + "²»´æÔÚ£¡");    
+            throw new RuntimeException(srcPathName + "ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½");    
         }   
             
         Project prj = new Project();    
@@ -35,15 +35,15 @@ public class ZipUtil {
         FileSet fileSet = new FileSet();    
         fileSet.setProject(prj);    
         fileSet.setDir(srcdir);    
-        //fileSet.setIncludes("**/*.java"); //°üÀ¨ÄÄÐ©ÎÄ¼þ»òÎÄ¼þ¼Ð eg:zip.setIncludes("*.java");    
-        //fileSet.setExcludes(...); //ÅÅ³ýÄÄÐ©ÎÄ¼þ»òÎÄ¼þ¼Ð    
+        //fileSet.setIncludes("**/*.java"); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ eg:zip.setIncludes("*.java");    
+        //fileSet.setExcludes(...); //ï¿½Å³ï¿½ï¿½ï¿½Ð©ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½    
         zip.addFileset(fileSet);    
         zip.execute();   
     }
     
     /**
-     * É¾³ýÎÄ¼þ¼Ð
-     * @param dirname
+     * É¾ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+     * @param srcPathName
      */
     public static void delete(String srcPathName) {
         File file = new File(srcPathName);

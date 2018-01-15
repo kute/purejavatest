@@ -1,8 +1,8 @@
 package com.kute.util.cache.redisson.base;
 
 import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 
-import java.io.IOException;
 
 /**
  * Created by longbai on 2017/12/29.
@@ -14,11 +14,15 @@ public class SingleServerClientCreator implements RedissonServerClientCreator {
     private static final SingleServerClientCreator creator = new SingleServerClientCreator();
 
     @Override
-    public RedissonClient newClient() throws IOException {
-        return initRedissonClient(SINGLE_SERVER_CONFIG_FILE);
+    public RedissonClient newClient(Config oldConf) {
+        if(null == oldConf) {
+            oldConf = new Config();
+        }
+        return initRedissonClient(SINGLE_SERVER_CONFIG_FILE, oldConf);
     }
 
     public static SingleServerClientCreator getInstance() {
         return creator;
     }
+
 }

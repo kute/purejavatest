@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.ObjIntConsumer;
 
 public class CollectionsTest {
 
@@ -69,7 +70,7 @@ public class CollectionsTest {
     @Test
     public void test2() {
 
-        Set<Integer> set = Sets.newHashSet(1, 3, 3, 4, 5);
+        Set<Integer> set = Sets.newHashSet(1, 3, 3, 4, 5, 5, 5, 9);
         Set<Integer> set2 = Sets.newHashSet(4, 9);
         System.out.println(set);
 
@@ -83,6 +84,17 @@ public class CollectionsTest {
 
         // I can use intersection as a Set directly, but copying it can be more efficient if I use it a lot.
         System.out.println(intersection.immutableCopy());
+
+        // 允许重复，但不保证有序: 词频
+        Multiset<Integer> multiset = HashMultiset.create();
+        multiset.addAll(Ints.asList(1, 2, 3, 3, 3, 4, 5, 5, 8, 9));
+        System.out.println(multiset);
+        System.out.println(multiset.count(5));
+        multiset.forEach(System.out::print);
+        multiset.forEachEntry((ele, count) -> {
+            System.out.println(ele + ":" + count);
+        });
+
     }
 
 }

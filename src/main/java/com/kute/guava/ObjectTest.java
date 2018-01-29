@@ -20,10 +20,6 @@ public class ObjectTest {
                 Objects.hashCode("a", "b")
         ));
 
-        LOGGER.info("{}", Objects.toStringHelper(this).add("name", "kute").toString());
-        LOGGER.info("{}", Objects.toStringHelper("testObj").add("name", "kute").toString());
-
-
         Book b1 = new Book(2, "kute", 1.0);
         Book b2 = new Book(1, "bai", 3.0);
         LOGGER.info("{}", b1.compareTo(b2));

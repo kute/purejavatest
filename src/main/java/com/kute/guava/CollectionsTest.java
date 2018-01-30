@@ -1,13 +1,17 @@
 package com.kute.guava;
 
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.*;
+import com.google.common.primitives.Chars;
 import com.google.common.primitives.Ints;
+import com.kute.po.Book;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class CollectionsTest {
@@ -132,6 +136,59 @@ public class CollectionsTest {
         multiset.forEachEntry((ele, count) -> {
             System.out.println(ele + ":" + count);
         });
+        //按频率降序排序
+        ImmutableMultiset<Integer> immutableMultiset = Multisets.copyHighestCountFirst(multiset);
+        System.out.println(immutableMultiset);
+
+    }
+
+    /**
+     * Maps
+     */
+    @Test
+    public void test3() {
+
+        List<Book> bookList = Lists.newArrayList(
+                new Book(100, "kute"),
+                new Book(101, "bai"),
+                new Book(102, "li")
+        );
+
+        ImmutableMap<Integer, Book> map = Maps.uniqueIndex(bookList, book -> book.getId());
+        System.out.println(map);
+
+        Set<String > eSet = Sets.newHashSet("a", "b", "c");
+        Set<String > aSet = Sets.newHashSet("d", "b", "c", "f");
+
+        // asMap: key 不变，生成不同类型的value
+        Map<String , Book> map1 = Maps.asMap(eSet, letter -> new Book(letter.hashCode(), letter));
+        System.out.println(map1);
+
+        // 返回不可变 map
+        ImmutableMap<String , Book> map2 = Maps.toMap(aSet, letter -> new Book(letter.hashCode(), letter));
+        System.out.println(map2);
+
+        ImmutableMap<String , Integer> m1 = ImmutableMap.of("a", 1, "b", 2, "c", 3);
+        ImmutableMap<String , Integer> m2 = ImmutableMap.of("b", 2, "c", 4, "d", 5);
+        // 比较map： k v都相同
+        MapDifference<String , Integer> differenceHandler = Maps.difference(m1, m2);
+        // same key and value
+        System.out.println(differenceHandler.entriesInCommon());
+        // key only exist left
+        System.out.println(differenceHandler.entriesOnlyOnLeft());
+        // key only exist right
+        System.out.println(differenceHandler.entriesOnlyOnRight());
+        // 差异： same key but different value
+        System.out.println(differenceHandler.entriesDiffering());
+
+        Map<String, Book> m3 = Maps.transformEntries(m2, (key, value) -> {
+            Book newValue = new Book(key.hashCode(), key + value);
+            return newValue;
+        });
+        System.out.println(m3);
+
+        Map<String , Book> m4 = Maps.transformValues(m2, value -> new Book(value, value.toString()));
+        System.out.println(m4);
 
     }
 

@@ -1,16 +1,20 @@
 package com.kute.guava;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.*;
 import com.google.common.primitives.Ints;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.function.ObjIntConsumer;
 
 public class CollectionsTest {
 
+    /**
+     * Lists
+     */
     @Test
     public void test() {
 
@@ -29,17 +33,32 @@ public class CollectionsTest {
         // 扩容方式
         // size = Ints.saturatedCast(5L + (long)arraySize + (long)(arraySize / 10))
         data = Lists.newArrayListWithExpectedSize(2);
+        data.addAll(Ints.asList(3, 4, 5));
 
-        data.add(1);
-        data.add(3);
-        data.add(4);
         System.out.println(data);
 
         System.out.println(Lists.reverse(data));
         System.out.println(Lists.partition(data, 1));
 
+        // n-array
+        List<List<Object>> result = Lists.cartesianProduct(ImmutableList.of(
+                ImmutableList.of(1, 2),
+                ImmutableList.of("A", "B", "C"),
+                ImmutableList.of("I", "II", "III")
+        ));
+        System.out.println(result.size());
+
+        // 写时复制，并发读写，读写分离
+        List<Integer> list = Lists.newCopyOnWriteArrayList();
+
+        List<String > slist = Lists.transform(result, eleList -> Joiner.on("-").join(eleList));
+        System.out.println(slist);
+
     }
 
+    /**
+     * Iterables
+     */
     @Test
     public void test1() {
         // 连接
@@ -59,14 +78,27 @@ public class CollectionsTest {
         System.out.println(Iterables.getFirst(concatenated, 3));
         System.out.println(Iterables.getLast(concatenated, 2));
 
-        List<Integer> data = Ints.asList(2, 3, 5, 6, 4, 1, 3);
-        // 元素比较，顺序元素一致
-        System.out.println(Iterables.elementsEqual(concatenated, FluentIterable.from(data)));
+        // 元素比较，元素顺序需要一致
+        System.out.println(
+                Iterables.elementsEqual(Ints.asList(1, 2, 3), Ints.asList(2, 1, 3))
+        );
+
+        Collection<Integer> collection = Lists.newArrayList(concatenated);
+        Iterables.removeIf(collection, ele -> ele > 4);
+        System.out.println(collection);
+
+        //多个条件组合
 
         concatenated = Iterables.unmodifiableIterable(concatenated);
-        concatenated.forEach(ele -> System.out.print(ele));
+        // 此操作不允许
+        // Iterables.removeAll(concatenated, Ints.asList(2));
+        concatenated.forEach(System.out::print);
+
     }
 
+    /**
+     * Sets
+     */
     @Test
     public void test2() {
 
@@ -74,18 +106,24 @@ public class CollectionsTest {
         Set<Integer> set2 = Sets.newHashSet(4, 9);
         System.out.println(set);
 
+        // 并集
         System.out.println(Sets.union(set, set2));
 
-        Set<String> wordsWithPrimeLength = ImmutableSet.of("one", "two", "three", "six", "seven", "eight");
         Set<String> primes = ImmutableSet.of("two", "three", "five", "seven");
+        Set<String> wordsWithPrimeLength = ImmutableSet.of("one", "two", "three", "six", "seven", "eight");
 
-        // contains "two", "three", "seven"
+        // 交集
         Sets.SetView<String> intersection = Sets.intersection(primes, wordsWithPrimeLength);
-
         // I can use intersection as a Set directly, but copying it can be more efficient if I use it a lot.
         System.out.println(intersection.immutableCopy());
 
-        // 允许重复，但不保证有序: 词频
+        // 差集
+        System.out.println(Sets.difference(primes, wordsWithPrimeLength).immutableCopy());
+
+        // 对称差集
+        System.out.println(Sets.symmetricDifference(primes, wordsWithPrimeLength).immutableCopy());
+
+        // list 允许重复且有序；set不允许重复且无序；multiset允许重复，但无序（词频统计）
         Multiset<Integer> multiset = HashMultiset.create();
         multiset.addAll(Ints.asList(1, 2, 3, 3, 3, 4, 5, 5, 8, 9));
         System.out.println(multiset);

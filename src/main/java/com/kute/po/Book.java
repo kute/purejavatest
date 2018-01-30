@@ -3,6 +3,8 @@ package com.kute.po;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 
+import java.util.Comparator;
+
 /**
  * Created by kute on 2017/10/14.
  */
@@ -68,6 +70,7 @@ public class Book implements Comparable<Book> {
                 .compare(this.price, o.price)
                 .compare(this.name, o.name, Ordering.natural().nullsFirst())
                 .result();
+
     }
 
     @Override

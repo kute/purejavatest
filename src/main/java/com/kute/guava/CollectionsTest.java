@@ -140,6 +140,13 @@ public class CollectionsTest {
         ImmutableMultiset<Integer> immutableMultiset = Multisets.copyHighestCountFirst(multiset);
         System.out.println(immutableMultiset);
 
+        ImmutableSet<Integer> immutableSet = ImmutableSet.of(1, 2, 3);
+
+        ImmutableSet.<Integer>builder()
+                .addAll(immutableSet)
+                .add(23)
+                .build();
+
     }
 
     /**
@@ -153,9 +160,29 @@ public class CollectionsTest {
                 new Book(101, "bai"),
                 new Book(102, "li")
         );
+        ImmutableSet<String> digits = ImmutableSet.of(
+                "zero", "one", "two", "three", "four",
+                "five", "six", "seven", "eight", "nine");
 
+        // key 唯一
         ImmutableMap<Integer, Book> map = Maps.uniqueIndex(bookList, book -> book.getId());
         System.out.println(map);
+
+        // multimap: one key to many values; many keys to one value
+
+        // key 不唯一: 遍历 value，返回新的key
+        ImmutableMultimap<Integer, String> immutableMultimap = Multimaps.index(digits, value -> {
+             Integer newKey = value.length();
+             return newKey;
+        });
+        // {4=[zero, four, five, nine], 3=[one, two, six], 5=[three, seven, eight]}
+        System.out.println(immutableMultimap);
+
+        Multimap<String, Integer> multimap = ArrayListMultimap.create();
+        multimap.putAll("a", Ints.asList(1, 2, 3));
+        multimap.putAll("b", Ints.asList(4, 2, 1));
+        multimap.putAll("c", Ints.asList(2, 5, 3));
+        System.out.println(multimap);
 
         Set<String > eSet = Sets.newHashSet("a", "b", "c");
         Set<String > aSet = Sets.newHashSet("d", "b", "c", "f");
@@ -181,6 +208,7 @@ public class CollectionsTest {
         // 差异： same key but different value
         System.out.println(differenceHandler.entriesDiffering());
 
+        // 转换
         Map<String, Book> m3 = Maps.transformEntries(m2, (key, value) -> {
             Book newValue = new Book(key.hashCode(), key + value);
             return newValue;
@@ -189,6 +217,26 @@ public class CollectionsTest {
 
         Map<String , Book> m4 = Maps.transformValues(m2, value -> new Book(value, value.toString()));
         System.out.println(m4);
+
+        // 多种类型的key的map: 以class作为key
+        ClassToInstanceMap<Object> classToInstanceMap = MutableClassToInstanceMap.create();
+        classToInstanceMap.putInstance(String.class, "a");
+        classToInstanceMap.putInstance(Integer.class, 2);
+        System.out.println(classToInstanceMap);
+    }
+
+    /**
+     * RangeSet
+     */
+    @Test
+    public void test4() {
+
+        RangeSet<Integer> rangeSet = TreeRangeSet.create();
+        rangeSet.add(Range.closed(1, 10)); // {[1, 10]}
+        rangeSet.add(Range.closedOpen(11, 15)); // disconnected range: {[1, 10], [11, 15)}
+        rangeSet.add(Range.closedOpen(15, 20)); // connected range; {[1, 10], [11, 20)}
+        rangeSet.add(Range.openClosed(0, 0)); // empty range; {[1, 10], [11, 20)}
+        rangeSet.remove(Range.open(5, 10)); // splits [1, 10]; {[1, 5], [10, 10], [11, 20)}
 
     }
 

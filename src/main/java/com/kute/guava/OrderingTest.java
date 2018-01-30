@@ -10,7 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static com.google.common.collect.Ordering.from;
 
 /**
  * Created by kute on 2018/1/28.
@@ -43,5 +46,11 @@ public class OrderingTest {
 
         logger.info("{}", order.max(bookList.iterator()));
 
+        // <>
+        Ordering.<Book>from(((o1, o2) -> o1.getPrice().compareTo(o2.getPrice()))).greatestOf(FluentIterable.from(bookList), bookList.size());
+        Ordering.<Book>from(Comparator.comparing(Book::getId)).greatestOf(FluentIterable.from(bookList), bookList.size());
+
+        // 找到非0返回
+        bookList.sort(Comparator.comparing((Book b) -> b.getId()).thenComparing(b -> b.getName()).thenComparing(b -> b.getPrice()));
     }
 }

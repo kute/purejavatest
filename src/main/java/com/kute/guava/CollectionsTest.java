@@ -1,18 +1,12 @@
 package com.kute.guava;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.*;
-import com.google.common.primitives.Chars;
 import com.google.common.primitives.Ints;
 import com.kute.po.Book;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CollectionsTest {
 

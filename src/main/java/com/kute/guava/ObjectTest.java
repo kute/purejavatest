@@ -24,6 +24,8 @@ public class ObjectTest {
         Book b2 = new Book(1, "bai", 3.0);
         LOGGER.info("{}", b1.compareTo(b2));
 
+        System.out.println(Integer.valueOf(1).equals(null));
+
     }
 
 }

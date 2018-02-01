@@ -1,11 +1,9 @@
 package com.kute.service;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,7 +13,7 @@ public class Test {
 
     public static void main(String[] args) {
 
-        final String path = "";
+        String path = "";
 
         Long lr = ServiceBusinessUtil.getByCatchException(new AbstractServiceExecutor<Long>() {
             @Override

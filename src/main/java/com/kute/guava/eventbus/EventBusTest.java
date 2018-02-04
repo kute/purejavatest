@@ -1,7 +1,6 @@
 package com.kute.guava.eventbus;
 
-import com.google.common.eventbus.DeadEvent;
-import com.kute.guava.eventbus.event.MessageEvent;
+import com.kute.guava.eventbus.event.NoListenerEvent;
 import com.kute.guava.eventbus.event.OrderMessageEvent;
 import com.kute.guava.eventbus.event.PackMessageEvent;
 import com.kute.guava.eventbus.eventbus.MessageEventBus;
@@ -66,8 +65,8 @@ public class EventBusTest {
 
     @Test
     public void test3() {
-        DeadEvent deadEvent = new DeadEvent("ph", new MessageEvent("dead message"));
-        MessageEventBus.post(deadEvent);
+        NoListenerEvent noListenerEvent = new NoListenerEvent("这是一条未有监听此事件的消息");
+        MessageEventBus.post(noListenerEvent);
     }
 
 }

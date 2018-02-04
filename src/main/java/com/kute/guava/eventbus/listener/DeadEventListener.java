@@ -14,6 +14,6 @@ public class DeadEventListener {
 
     @Subscribe
     public void handle(DeadEvent deadEvent) {
-        logger.info("dead event:{}", deadEvent);
+        logger.info("收到 未有监听此事件的消息:{}", deadEvent);
     }
 }

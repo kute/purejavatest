@@ -2,6 +2,7 @@ package com.kute.guava.eventbus.eventbus;
 
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.SubscriberExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,11 +12,18 @@ public class MessageEventBus {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageEventBus.class);
 
-    public static final ExecutorService executor =
+    private static final ExecutorService executor =
             new ThreadPoolExecutor(50, 50, 10, TimeUnit.MINUTES,
                     new LinkedBlockingDeque<>(), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
 
-    public static final EventBus EVENT_BUS = new AsyncEventBus(executor);
+    /**
+     * 处理在 subscriber 抛出的异常
+     */
+    private static SubscriberExceptionHandler exceptionHandler = (throwable, subscriberExceptionContext) -> {
+        logger.info("Occur exception:{}, subscriber:{}", throwable, subscriberExceptionContext);
+    };
+
+    public static final EventBus EVENT_BUS = new AsyncEventBus(executor, exceptionHandler);
 
     public static void post(Object event) {
         EVENT_BUS.post(event);

@@ -16,6 +16,8 @@ public class PackMessageListener {
     @Subscribe
     public void handle(PackMessageEvent messageEvent) {
         logger.info("pack event:{}", messageEvent);
+
+        throw new RuntimeException("Order listener throw exception");
     }
 
     @Subscribe

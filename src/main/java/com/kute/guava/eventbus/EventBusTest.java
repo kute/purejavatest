@@ -1,10 +1,14 @@
 package com.kute.guava.eventbus;
 
+import com.google.common.eventbus.DeadEvent;
+import com.kute.guava.eventbus.event.MessageEvent;
 import com.kute.guava.eventbus.event.OrderMessageEvent;
 import com.kute.guava.eventbus.event.PackMessageEvent;
 import com.kute.guava.eventbus.eventbus.MessageEventBus;
+import com.kute.guava.eventbus.listener.DeadEventListener;
 import com.kute.guava.eventbus.listener.OrderMessageListener;
 import com.kute.guava.eventbus.listener.PackMessageListener;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,26 +26,31 @@ public class EventBusTest {
         OrderMessageListener orderMessageListener = new OrderMessageListener();
         PackMessageListener packMessageListener = new PackMessageListener();
 
-        MessageEventBus.register(orderMessageListener, packMessageListener);
+        DeadEventListener deadEventListener = new DeadEventListener();
+
+        MessageEventBus.register(orderMessageListener, packMessageListener, deadEventListener);
     }
 
-    @Test
-    public void test() throws InterruptedException {
-        OrderMessageEvent orderMessageEvent = new OrderMessageEvent("Order Message Event", 1001, 35.9);
-        MessageEventBus.post(orderMessageEvent);
-
+    @After
+    public void sleep() throws InterruptedException {
         TimeUnit.SECONDS.sleep(2L);
     }
 
     @Test
-    public void test1() throws InterruptedException {
+    public void test() {
+        OrderMessageEvent orderMessageEvent = new OrderMessageEvent("Order Message Event", 1001, 35.9);
+        MessageEventBus.post(orderMessageEvent);
+
+    }
+
+    @Test
+    public void test1() {
 
         OrderMessageEvent orderMessageEvent = new OrderMessageEvent("Order Message Event", 1001, 35.9);
         PackMessageEvent packMessageEvent = new PackMessageEvent("Pack message event", "Beijing", new Timestamp(System.currentTimeMillis()));
 
         MessageEventBus.post(orderMessageEvent, packMessageEvent);
 
-        TimeUnit.SECONDS.sleep(2L);
     }
 
     /**
@@ -49,11 +58,16 @@ public class EventBusTest {
      * @throws InterruptedException
      */
     @Test
-    public void test2() throws InterruptedException {
+    public void test2() {
         for (int i = 1; i <= 10; i++) {
             MessageEventBus.post(new OrderMessageEvent("Order Message Event", 1000 + i, 35.9));
         }
-
-        TimeUnit.SECONDS.sleep(2L);
     }
+
+    @Test
+    public void test3() {
+        DeadEvent deadEvent = new DeadEvent("ph", new MessageEvent("dead message"));
+        MessageEventBus.post(deadEvent);
+    }
+
 }

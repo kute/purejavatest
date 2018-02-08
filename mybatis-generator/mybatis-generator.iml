@@ -122,5 +122,6 @@
     <orderEntry type="library" name="Maven: org.checkerframework:dataflow:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.checkerframework:javacutil:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.errorprone:javac:9+181-r4173-1" level="project" />
+    <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.5" level="project" />
   </component>
 </module>

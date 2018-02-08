@@ -2,7 +2,7 @@ package com.kute.mybatis.domain;
 
 import java.util.Date;
 
-public class user {
+public class User {
     private Long id;
 
     private String name;

@@ -82,6 +82,8 @@ public class StreamTest {
         stream = Stream.iterate(1, n -> n + 10);
         System.out.println(stream.limit(20).collect(Collectors.toList()));
 
+        Stream.generate(Math::random).limit(5).forEachOrdered(System.out::println);
+
         // 词频统计
         List<String> items =
                 Arrays.asList("apple", "apple", "banana",
@@ -91,5 +93,21 @@ public class StreamTest {
                         Collectors.groupingBy(Function.identity(), Collectors.counting())
                 );
         System.out.println(result);
+
+        // flatMap
+        List<List<String >> lists = Lists.newArrayList(
+                Lists.newArrayList("apple", "orange"),
+                Lists.newArrayList("papaya", "banana")
+        );
+        // [apple, orange, papaya, banana]
+        List<String > flatResult = lists.stream().flatMap(strings -> strings.stream()).collect(Collectors.toList());
+        System.out.println(flatResult);
+        // [a, p, p, l, e, o, r, a, n, g, e, p, a, p, a, y, a, b, a, n, a, n, a]
+        flatResult = lists.stream().flatMap(strings -> strings.stream()).flatMap(s -> Arrays.stream(s.split(""))).collect(Collectors.toList());
+        System.out.println(flatResult);
+        List<String[]> aryResult = lists.stream().flatMap(strings -> strings.stream()).map(s -> s.split("")).collect(Collectors.toList());
+        aryResult.forEach(ary -> System.out.println(Arrays.asList(ary)));
+
     }
+
 }

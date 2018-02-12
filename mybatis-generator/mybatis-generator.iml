@@ -64,7 +64,7 @@
     <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:4.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.1.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.21.Final" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-oxm:4.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jms:4.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-messaging:4.1.1.RELEASE" level="project" />
@@ -123,5 +123,13 @@
     <orderEntry type="library" name="Maven: org.checkerframework:javacutil:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.errorprone:javac:9+181-r4173-1" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-client:4.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-common:4.2.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-srvutil:4.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-remoting:4.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-tcnative:${os.detected.classifier}:1.1.33.Fork22" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-openmessaging:4.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.openmessaging:openmessaging-api:0.1.0-alpha" level="project" />
   </component>
 </module>

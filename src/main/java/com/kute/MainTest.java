@@ -5,6 +5,8 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,17 +16,19 @@ public class MainTest {
 
     public static void main(String[] args) throws  Exception{
 
-        Map<String, String> map = Maps.asMap(Sets.newHashSet("a", "b"), new Function<String, String>() {
-            @Override
-            public String apply(String s) {
-                return s;
-            }
-        });
-        String mapString = map.toString();
-        System.out.println(mapString);
-        String fs = mapString.substring(1, mapString.length() - 1);
-        Map result = Splitter.on(",").trimResults().omitEmptyStrings().withKeyValueSeparator("=").split(fs);
-        System.out.println(result);
 
+        List<Integer> list = Collections.emptyList();
+        list.add(2);
+        System.out.println(list);
+
+    }
+
+    public void test() {
+        for (int i = 0; i < 10; i++) {
+            if(i == 5) {
+                throw new RuntimeException("");
+            }
+            System.out.println(i);
+        }
     }
 }

@@ -1,14 +1,11 @@
 package com.kute.util.http;
 
 import java.io.UnsupportedEncodingException;
-import java.net.SocketTimeoutException;
+import java.net.*;
 import java.nio.charset.CodingErrorAction;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -215,6 +212,31 @@ public class HttpsClientUtil {
                 httpPost.releaseConnection();
         }
         return responseString;
+    }
+
+    public static String getLocalIp() {
+        try {
+            Enumeration networkInterface = NetworkInterface.getNetworkInterfaces();
+
+            while(networkInterface.hasMoreElements()) {
+                NetworkInterface ni = (NetworkInterface)networkInterface.nextElement();
+                Enumeration inetAddress = ni.getInetAddresses();
+
+                while(inetAddress.hasMoreElements()) {
+                    InetAddress ia = (InetAddress)inetAddress.nextElement();
+                    if (!(ia instanceof Inet6Address)) {
+                        String thisIp = ia.getHostAddress();
+                        if (thisIp != null && !ia.isLoopbackAddress() && !thisIp.contains(":") && !thisIp.startsWith("127.0.")) {
+                            return thisIp;
+                        }
+                    }
+                }
+            }
+        } catch (SocketException var5) {
+            logger.warn("can't getLocalIp", var5);
+        }
+
+        return "127.0.0.1";
     }
 	
 	

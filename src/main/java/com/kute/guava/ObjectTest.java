@@ -1,5 +1,6 @@
 package com.kute.guava;
 
+import com.google.common.base.Defaults;
 import com.google.common.base.Objects;
 import com.kute.po.Book;
 import org.junit.Assert;
@@ -25,6 +26,15 @@ public class ObjectTest {
         LOGGER.info("{}", b1.compareTo(b2));
 
         System.out.println(Integer.valueOf(1).equals(null));
+
+    }
+
+    @Test
+    public void test1() {
+
+        // 默认值
+        Integer defaultValue = Defaults.defaultValue(Integer.class);
+        Assert.assertTrue(defaultValue == 0);
 
     }
 

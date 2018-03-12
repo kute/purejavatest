@@ -5,9 +5,12 @@ import com.kute.po.Book;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -108,6 +111,17 @@ public class StreamTest {
         List<String[]> aryResult = lists.stream().flatMap(strings -> strings.stream()).map(s -> s.split("")).collect(Collectors.toList());
         aryResult.forEach(ary -> System.out.println(Arrays.asList(ary)));
 
+    }
+
+    public static void main(String[] args) throws IOException {
+        List<String > strList = Lists.newArrayList(
+                "a,b,c,d",
+                "b,d,e,a,a"
+        );
+//        Files.readAllLines(Paths.get(""), StandardCharsets.UTF_8);
+        Set<Map.Entry<String, Long>> s = strList.parallelStream().flatMap(line -> Arrays.stream(line.split(","))).map(word -> new AbstractMap.SimpleEntry<>(word, 1)).collect(Collectors.groupingBy(AbstractMap.SimpleEntry::getKey, Collectors.counting())).entrySet();
+        System.out.println(s);
+        System.out.println(strList.parallelStream().flatMap(line -> Arrays.stream(line.split(","))).collect(Collectors.toConcurrentMap(w -> w, w -> 1, Integer::sum)));
     }
 
 }

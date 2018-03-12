@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.meituan.service.mobile.mtthrift.config.ThriftClientGlobalConfig;
 
 /**
  * created by kute on 2018-02-08 16:51
@@ -38,4 +39,5 @@ public class ForEachTest {
         itemList.stream().filter(s -> !s.equals("B")).forEach(System.out::println);
 
     }
+
 }

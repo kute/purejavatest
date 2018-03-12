@@ -17,9 +17,17 @@ public class MainTest {
     public static void main(String[] args) throws  Exception{
 
 
-        List<Integer> list = Collections.emptyList();
-        list.add(2);
-        System.out.println(list);
+        int n = 0;
+        do {
+            int y = (n++) * 10;
+            System.out.println(y);
+            if(y == 0) {
+                break;
+            } else {
+                System.out.println("n");
+            }
+        } while (true);
+        System.out.println(n);
 
     }
 

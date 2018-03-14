@@ -1,19 +1,17 @@
 package com.kute.mybatis.domain;
 
-import java.util.Date;
-
 public class User {
-    private Long id;
+    private Integer id;
 
     private String name;
 
-    private Date birthday;
+    private Integer age;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -25,11 +23,11 @@ public class User {
         this.name = name == null ? null : name.trim();
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

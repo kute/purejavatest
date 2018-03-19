@@ -1,9 +1,13 @@
 package com.kute;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Function;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.kute.util.date.DateUtil;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,19 +20,7 @@ public class MainTest {
 
     public static void main(String[] args) throws  Exception{
 
-
-        int n = 0;
-        do {
-            int y = (n++) * 10;
-            System.out.println(y);
-            if(y == 0) {
-                break;
-            } else {
-                System.out.println("n");
-            }
-        } while (true);
-        System.out.println(n);
-
+        System.out.println(DateUtils.parseDate("2018-06-31", "yyyy-MM-dd").getTime());
     }
 
     public void test() {

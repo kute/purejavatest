@@ -12,8 +12,6 @@ import java.util.Map;
 
 /**
  * Created at: 2017-12-12 16:09
- *
- * @author guojing
  */
 public class EnumKeyTypeHandler<E extends Enum<E> & BaseEnum> extends BaseTypeHandler<E> {
 

@@ -15,7 +15,6 @@ import java.util.Map;
  *
  * mybatis 枚举类型处理
  *
- * @author guojing
  */
 public class EnumValueTypeHandler<E extends Enum<?> & BaseEnum> extends BaseTypeHandler<E> {
 

@@ -21,6 +21,9 @@ public class MainTest {
     public static void main(String[] args) throws  Exception{
 
         System.out.println(DateUtils.parseDate("2018-06-31", "yyyy-MM-dd").getTime());
+
+        System.out.println(15111742 % 50);
+        System.out.println(21686733 % 50);
     }
 
     public void test() {

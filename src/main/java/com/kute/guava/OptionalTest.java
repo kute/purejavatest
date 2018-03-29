@@ -1,6 +1,5 @@
 package com.kute.guava;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import org.junit.Assert;
@@ -30,9 +29,6 @@ public class OptionalTest {
         Optional<Integer> op2 = Optional.of(8);
 
         Assert.assertEquals(op2.get(), new Integer(8));
-
-        Assert.assertEquals(MoreObjects.firstNonNull(new Integer(8), new Integer(9)), new Integer(8));
-        Assert.assertEquals(MoreObjects.firstNonNull(null, new Integer(9)), new Integer(9));
 
         String s = " ";
         Assert.assertFalse(s.isEmpty());

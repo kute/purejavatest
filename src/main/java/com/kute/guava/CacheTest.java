@@ -1,11 +1,13 @@
 package com.kute.guava;
 
 import com.google.common.cache.*;
+import com.google.common.collect.Iterables;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,11 +16,16 @@ public class CacheTest {
     private static final Logger logger = LoggerFactory.getLogger(CacheTest.class);
 
     /**
-     * 当缓存中元素被移除时触发
+     * 当缓存中元素被移除时触发(同步调用，耗时操作 应装饰为异步）
      */
     private static final RemovalListener<String , AtomicInteger> removalListener = removalNotification -> {
         logger.info("[key={}, value={}] is removed from cache", removalNotification.getKey(), removalNotification.getValue());
     };
+
+    /**
+     * 装饰为 异步调用
+     */
+    private static final RemovalListener<String , AtomicInteger> asyncRemovalListener = RemovalListeners.asynchronous(removalListener, Executors.newCachedThreadPool());
 
     /**
      * new builder from spec
@@ -67,6 +74,14 @@ public class CacheTest {
         logger.info(CACHE.stats().toString());
         // concurrentMap
         logger.info(CACHE.asMap().toString());
+
+        // 如果缓存存在，则返回； 否则 回调函数 计算结果后缓存，并返回
+        CACHE.get(key, () ->  new AtomicInteger(0));
+
+        // 清除 key
+        CACHE.invalidate(key);
+        CACHE.invalidateAll();
+        CACHE.invalidateAll(Iterables.cycle("a", "b"));
 
 
         TimeUnit.SECONDS.sleep(5);

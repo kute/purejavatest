@@ -366,6 +366,8 @@
                 <configuration>
                     <compilerId>javac-with-errorprone</compilerId>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <!-- 此设置可以在反射获取参数时获取到正确的参数名称 而不是 var0 var1 arg0 -->
+					<parameters>true</parameters>
                     <source>1.8</source>
                     <target>1.8</target>
                     <annotationProcessorPaths>

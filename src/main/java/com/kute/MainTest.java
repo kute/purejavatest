@@ -1,8 +1,10 @@
 package com.kute;
 
+import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.kute.java8.design.Service;
+import com.netflix.hystrix.contrib.javanica.conf.HystrixPropertiesManager;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -41,9 +43,6 @@ public class MainTest {
 //        System.out.println(DateTime.now().plusDays(-1).withMillisOfDay(0).toDate());
 //        System.out.println(738%200);
 
-        List<List<Object>> apartmentList = Lists.newArrayList(
-                Lists.newArrayList()
-        );
 
 
     }

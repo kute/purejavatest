@@ -335,7 +335,12 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.4.5</version>
+			<version>3.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.36</version>
 		</dependency>
 
 		<!-- rocketmq -->
@@ -370,6 +375,12 @@
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
         </dependency>
+
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-javanica</artifactId>
+			<version>1.5.12</version>
+		</dependency>
 
     </dependencies>
 

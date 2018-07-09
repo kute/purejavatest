@@ -1,21 +1,11 @@
 package com.kute;
 
-import com.alibaba.fastjson.JSONArray;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.kute.java8.design.Service;
-import com.netflix.hystrix.contrib.javanica.conf.HystrixPropertiesManager;
-import org.apache.commons.lang3.time.DateUtils;
-import org.joda.time.DateTime;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
+import com.google.common.primitives.Booleans;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by kute on 2017/10/14.
@@ -26,24 +16,10 @@ public class MainTest {
 
     public static void main(String[] args) throws  Exception{
 
-//        System.out.println(DateUtils.parseDate("2018-06-31", "yyyy-MM-dd").getTime());
-//
-//        System.out.println(15111742 % 50);
-//        System.out.println(21686733 % 50);
-//
-//        Object o = Service.getInstance().execute(2, count -> {
-//            LOGGER.info("==========count:{}", count);
-//            return (Integer)count + 1;
-//        });
-//        System.out.println(o);
-//
-//        Map<Long, Integer> map = Maps.newHashMap();
-//        System.out.println(map.get(2L));
-//
-//        System.out.println(DateTime.now().plusDays(-1).withMillisOfDay(0).toDate());
-//        System.out.println(738%200);
+        String message = "权限操作 %s 不存在";
+        System.out.println(String.format(message,"aa"));
 
-
+        new MainTest().test2(3);
 
     }
 

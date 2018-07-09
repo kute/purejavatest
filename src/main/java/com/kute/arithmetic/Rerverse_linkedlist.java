@@ -1,4 +1,4 @@
-package com.kute.test;
+package com.kute.arithmetic;
 
 /**
  * Created by kute on 2017/5/25.
@@ -35,10 +35,22 @@ public class Rerverse_linkedlist {
 //        instance.printLinkedList(tail);
 
 //        System.out.println(head.value);
-        Node node = instance.reverse2(head);
+        Node node = instance.test(head);
+//        Node node = instance.reverse2(head);
         instance.printLinkedList(node);
-//        System.out.println(node.value);
+        System.out.println(node.value);
 
+    }
+
+    public Node test(Node head) {
+        Node pre = head, temp;
+        while(head.next != null) {
+            temp = head.next.next;
+            head.next.next = pre;
+            pre = head.next;
+            head.next = temp;
+        }
+        return pre;
     }
 
     private Node reverse2(Node head) {

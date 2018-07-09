@@ -1,4 +1,4 @@
-package com.kute.test;
+package com.kute.arithmetic;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,39 +26,7 @@ public class Sort {
 
         Integer[] a = {1, 3, 5, 7, 10};
         Integer[] b = {2, 6, 8, 11, 15, 20};
-        merge(a, b);
 
-    }
-
-    public static void merge(Integer[] a, Integer[] b) {
-        int la = a.length, lb = b.length;
-        Integer[] c = new Integer[la + lb];
-        int n = 0, i, j;
-        for(i=0, j=0; i<la && j<lb;) {
-            if(a[i] > b[j]) {
-                c[n] = b[j];
-                j++;
-            } else if(a[i] < b[j]) {
-                c[n] = a[i];
-                i++;
-            } else {
-                c[n] = a[i];
-                n++;
-                c[n] = a[i];
-                i++;j++;
-            }
-            n++;
-        }
-        if(i == la) {
-            for(int p = j; p< lb; p++, n++) {
-                c[n] = b[p];
-            }
-        } else {
-            for(int p=i; p<la; p++, n++) {
-                c[n] = a[p];
-            }
-        }
-        print(c);
     }
 
     /**

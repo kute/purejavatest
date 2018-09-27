@@ -21,18 +21,29 @@ public class CuratorCreator {
     public CuratorCreator() {
     }
 
-    public CuratorCreator(String host) {
+    public CuratorCreator(String host){
+        this(host, null, nameSpace);
+    }
+
+    public CuratorCreator(String host, String nameSpace){
+        this(host, null, nameSpace);
+    }
+
+    public CuratorCreator(String host, String authorization, String nameSpace) {
         if (!Strings.isNullOrEmpty(host)) {
             CuratorCreator.host = host;
         }
         RetryPolicy rp = new ExponentialBackoffRetry(1000, 3);
-        CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder().connectString(CuratorCreator.host)
+        CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
+                .connectString(CuratorCreator.host)
                 .connectionTimeoutMs(5000)
                 .sessionTimeoutMs(5000)
                 .retryPolicy(rp);
         builder.namespace(nameSpace);
-        CuratorFramework zclient = builder.build();
-        zkclient = zclient;
+        if(!Strings.isNullOrEmpty(authorization)) {
+            builder = builder.authorization("digest", authorization.getBytes());
+        }
+        zkclient = builder.build();
         zkclient.start();// 放在这前面执行
     }
 

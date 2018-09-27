@@ -1,18 +1,18 @@
 package com.kute.util.cache.redis.shared;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.base.Strings;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.util.Hashing;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ShardedRedisUtil {
 
@@ -64,6 +64,10 @@ public class ShardedRedisUtil {
         for (String redisUrl : redisUrls.split(DEFAULT_REDIS_SEPARATOR)) {
             String[] redisUrlInfo = redisUrl.split(HOST_PORT_SEPARATOR);
             JedisShardInfo Jedisinfo = new JedisShardInfo(redisUrlInfo[0], Integer.parseInt(redisUrlInfo[1]), timeout);
+            String password = SharedRedisConfig.getConfigProperty("redis.jedisPoolConfig.password");
+            if(!Strings.isNullOrEmpty(password)) {
+                Jedisinfo.setPassword(password);
+            }
             shardedPoolList.add(Jedisinfo);
         }
 
@@ -95,138 +99,63 @@ public class ShardedRedisUtil {
     }
 
     public String set(final String key, final String value) {
-        return execute(key, new ShardedRedisExecutor<String>() {
-            @Override
-            public String execute(ShardedJedis jedis) {
-                return jedis.set(key, value);
-            }
-        });
+        return execute(key, jedis -> jedis.set(key, value));
     }
 
     public String set(final String key, final String value, final String nxxx, final String expx, final long time) {
-        return execute(key, new ShardedRedisExecutor<String>() {
-            @Override
-            public String execute(ShardedJedis jedis) {
-                return jedis.set(key, value, nxxx, expx, time);
-            }
-        });
+        return execute(key, jedis -> jedis.set(key, value, nxxx, expx, time));
     }
 
     public String get(final String key) {
-        return execute(key, new ShardedRedisExecutor<String>() {
-            @Override
-            public String execute(ShardedJedis jedis) {
-                return jedis.get(key);
-            }
-        });
+        return execute(key, jedis -> jedis.get(key));
     }
 
     public Boolean exists(final String key) {
-        return execute(key, new ShardedRedisExecutor<Boolean>() {
-            @Override
-            public Boolean execute(ShardedJedis jedis) {
-                return jedis.exists(key);
-            }
-        });
+        return execute(key, jedis -> jedis.exists(key));
     }
 
     public Long setnx(final String key, final String value) {
-        return execute(key, new ShardedRedisExecutor<Long>() {
-            @Override
-            public Long execute(ShardedJedis jedis) {
-                return jedis.setnx(key, value);
-            }
-        });
+        return execute(key, jedis -> jedis.setnx(key, value));
     }
 
     public String setex(final String key, final int seconds, final String value) {
-        return execute(key, new ShardedRedisExecutor<String>() {
-            @Override
-            public String execute(ShardedJedis jedis) {
-                return jedis.setex(key, seconds, value);
-            }
-        });
+        return execute(key, jedis -> jedis.setex(key, seconds, value));
     }
 
     public Long expire(final String key, final int seconds) {
-        return execute(key, new ShardedRedisExecutor<Long>() {
-            @Override
-            public Long execute(ShardedJedis jedis) {
-                return jedis.expire(key, seconds);
-            }
-        });
+        return execute(key, jedis -> jedis.expire(key, seconds));
     }
 
     public Long incr(final String key) {
-        return execute(key, new ShardedRedisExecutor<Long>() {
-            @Override
-            public Long execute(ShardedJedis jedis) {
-                return jedis.incr(key);
-            }
-        });
+        return execute(key, jedis -> jedis.incr(key));
     }
 
     public Long decr(final String key) {
-        return execute(key, new ShardedRedisExecutor<Long>() {
-            @Override
-            public Long execute(ShardedJedis jedis) {
-                return jedis.decr(key);
-            }
-        });
+        return execute(key, jedis -> jedis.decr(key));
     }
 
     public Long hset(final String key, final String field, final String value) {
-        return execute(key, new ShardedRedisExecutor<Long>() {
-            @Override
-            public Long execute(ShardedJedis jedis) {
-                return jedis.hset(key, field, value);
-            }
-        });
+        return execute(key, jedis -> jedis.hset(key, field, value));
     }
 
     public String hget(final String key, final String field) {
-        return execute(key, new ShardedRedisExecutor<String>() {
-            @Override
-            public String execute(ShardedJedis jedis) {
-                return jedis.hget(key, field);
-            }
-        });
+        return execute(key, jedis -> jedis.hget(key, field));
     }
 
     public String hmset(final String key, final Map<String, String> hash) {
-        return execute(key, new ShardedRedisExecutor<String>() {
-            @Override
-            public String execute(ShardedJedis jedis) {
-                return jedis.hmset(key, hash);
-            }
-        });
+        return execute(key, jedis -> jedis.hmset(key, hash));
     }
 
     public List<String> hmget(final String key, final String... fields) {
-        return execute(key, new ShardedRedisExecutor<List<String>>() {
-            @Override
-            public List<String> execute(ShardedJedis jedis) {
-                return jedis.hmget(key, fields);
-            }
-        });
+        return execute(key, jedis -> jedis.hmget(key, fields));
     }
 
     public Long del(final String key) {
-        return execute(key, new ShardedRedisExecutor<Long>() {
-            @Override
-            public Long execute(ShardedJedis jedis) {
-                return jedis.del(key);
-            }
-        });
+        return execute(key, jedis -> jedis.del(key));
     }
 
     public Map<String, String> hgetAll(final String key) {
-        return execute(key, new ShardedRedisExecutor<Map<String, String>>() {
-            @Override
-            public Map<String, String> execute(ShardedJedis jedis) {
-                return jedis.hgetAll(key);
-            }
-        });
+        return execute(key, jedis -> jedis.hgetAll(key));
     }
 
     public void destroy() {

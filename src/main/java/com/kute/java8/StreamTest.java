@@ -6,10 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -67,6 +63,12 @@ public class StreamTest {
                 .reduce(initValue, (a, b) -> a + b);
 
         Assert.assertTrue(product == 17);
+        product = lengthList.stream().reduce(initValue, Integer::sum);
+        Assert.assertTrue(product == 17);
+
+        // 第三个参数只有在 并行计算时才生效： 先分别 accumulate 后 combine，即 (6+1) * (4+1) * (6+1) = 245
+        product = lengthList.parallelStream().reduce(initValue, Integer::sum, (a, b) -> a * b);
+        Assert.assertTrue(product == 245);
 
         product = lines.stream()
                 .mapToInt(String::length)

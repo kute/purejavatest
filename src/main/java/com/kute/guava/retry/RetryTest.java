@@ -37,8 +37,8 @@ public class RetryTest {
                 .withWaitStrategy(WaitStrategies.exponentialWait(100, 5, TimeUnit.SECONDS))
                 // 重试等待时间=斐波那契数列 增长方式
 //                .withWaitStrategy(WaitStrategies.fibonacciWait(100, 5, TimeUnit.SECONDS))
-                .withStopStrategy(StopStrategies.neverStop())
-//                .withStopStrategy(StopStrategies.stopAfterAttempt(3))
+//                .withStopStrategy(StopStrategies.neverStop())
+                .withStopStrategy(StopStrategies.stopAfterAttempt(3))
 //                .withStopStrategy(StopStrategies.stopAfterDelay(3, TimeUnit.MINUTES))
                 // 休眠等待的方式，默认是 Thread.sleep
                 .withBlockStrategy(BlockStrategies.threadSleepStrategy())

@@ -1,16 +1,16 @@
 package com.kute.util.cache.redis.hash;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.base.Strings;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class HashRedisUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(HashRedisUtil.class);
@@ -31,6 +31,7 @@ public class HashRedisUtil {
 
         // 操作超时时间,默认2秒
         int timeout = NumberUtils.toInt(HashRedisConfig.getConfigProperty("redis.timeout"), 5000);
+        String password = Strings.emptyToNull(HashRedisConfig.getConfigProperty("redis.password"));
         // jedis池最大连接数总数，默认8
         int maxTotal = NumberUtils.toInt(HashRedisConfig.getConfigProperty("redis.jedisPoolConfig.maxTotal"), 8);
         // jedis池最大空闲连接数，默认8
@@ -61,7 +62,8 @@ public class HashRedisUtil {
         List<JedisPool> jedisPoolList = new ArrayList<JedisPool>();
         for (String redisUrl : redisUrls.split(DEFAULT_REDIS_SEPARATOR)) {
             String[] redisUrlInfo = redisUrl.split(HOST_PORT_SEPARATOR);
-            jedisPoolList.add(new JedisPool(poolConfig, redisUrlInfo[0], Integer.parseInt(redisUrlInfo[1]), timeout));
+            JedisPool jedisPool = new JedisPool(poolConfig, redisUrlInfo[0], Integer.parseInt(redisUrlInfo[1]), timeout, password);
+            jedisPoolList.add(jedisPool);
         }
         jedisPools = jedisPoolList.toArray(jedisPools);
     }
@@ -78,7 +80,6 @@ public class HashRedisUtil {
      */
     public <T> T execute(String key, HashRedisExecutor<T> executor) {
         int index = (0x7FFFFFFF & key.hashCode()) % jedisPools.length;
-        System.out.println(index);
         Jedis jedis = jedisPools[index].getResource();
         T result = null;
         try {

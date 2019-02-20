@@ -1,19 +1,14 @@
 package com.kute.util.cache.redisson;
 
 import com.kute.util.cache.redisson.base.SingleServerClientCreator;
-import io.netty.channel.nio.NioEventLoopGroup;
 import org.redisson.api.RFuture;
 import org.redisson.api.RKeys;
 import org.redisson.api.RedissonClient;
-import org.redisson.codec.JsonJacksonCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 /**
  * Created by longbai on 2017/12/28.

@@ -8,8 +8,10 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.function.Function;
+
 import static io.vavr.API.*;
-import static io.vavr.Predicates.instanceOf;
+import static io.vavr.Predicates.*;
 
 /**
  * created by bailong001 on 2019/01/28 11:42
@@ -39,6 +41,21 @@ public class ValueTest {
                 ))
                 .getOrElse(-1);
         System.out.println(result);
+
+
+        String v = "v";
+        Function<Object, Object> function = x -> Match(x).of(
+                Case($(allOf(xx -> !"a".equals(xx), xx -> !"b".equals(xx))), "allOf"),
+                Case($(anyOf("a"::equals, "v"::equals)), "anyOf"),
+                Case($(is("b")), "is"),
+                Case($(isIn("a", "b")), "isIn"),
+                Case($(isNull()), "isNull"),
+                Case($(isNotNull()), "isNotNull"),
+                Case($(instanceOf(RuntimeException.class)), () -> "RuntimeException"),
+                Case($(), () -> "default")
+        );
+        System.out.println(function.apply(v));
+
     }
 
     private Integer somethingWithException(RuntimeException t) {

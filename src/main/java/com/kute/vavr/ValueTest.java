@@ -8,6 +8,7 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static io.vavr.API.*;
@@ -56,6 +57,20 @@ public class ValueTest {
         );
         System.out.println(function.apply(v));
 
+        Try.of(this::throwException)
+                .onFailure(throwable -> {
+                    System.out.println(throwable.getClass().getSimpleName());
+                })
+        .recover(x -> 2)
+                .andThenTry(this::throwException)
+                .recover(x -> 3)
+                .andThen((Consumer<Object>) System.out::println)
+                .andFinally(() -> System.out.println("done"));
+
+    }
+
+    public Object throwException() {
+        throw new RuntimeException();
     }
 
     private Integer somethingWithException(RuntimeException t) {

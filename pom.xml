@@ -411,6 +411,13 @@
             <!--<version>0.9.3</version>-->
         </dependency>
 
+        <!--guava 函数式扩展-->
+        <dependency>
+            <groupId>io.atlassian.fugue</groupId>
+            <artifactId>fugue</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

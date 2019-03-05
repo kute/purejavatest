@@ -1,11 +1,16 @@
 package com.kute.test;
 
-import com.google.common.base.MoreObjects;
+import com.google.common.base.Stopwatch;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.sound.midi.Soundbank;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 /**
  * created by kute on 2018-03-08 18:56
@@ -72,6 +77,33 @@ public class CtlTest {
 
     private static boolean isRunning(int c) {
         return c < SHUTDOWN;
+    }
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CtlTest.class);
+
+    @Test
+    public void test() throws InterruptedException {
+//        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        ExecutorService executorService = Executors.newWorkStealingPool(Runtime.getRuntime().availableProcessors());
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        IntStream.rangeClosed(1, 10).forEach(i -> {
+            executorService.submit(() -> {
+                System.out.println("thread " + Thread.currentThread().getName() + " run " + i + " done");
+                try {
+                    TimeUnit.SECONDS.sleep(i);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(i == 10) {
+                    countDownLatch.countDown();
+                }
+            });
+        });
+        countDownLatch.await();
+        System.out.println("take:" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
+
     }
 
 }

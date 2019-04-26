@@ -61,11 +61,30 @@ public class ValueTest {
                 .onFailure(throwable -> {
                     System.out.println(throwable.getClass().getSimpleName());
                 })
-        .recover(x -> 2)
+                .recover(x -> 2)
                 .andThenTry(this::throwException)
                 .recover(x -> 3)
                 .andThen((Consumer<Object>) System.out::println)
                 .andFinally(() -> System.out.println("done"));
+
+
+        Try.of(this::throwException)
+                .onFailure(ex -> System.out.println(ex.getClass().getSimpleName()))
+                .andThenTry(() -> System.out.println("done2"));
+
+        System.out.println(Try.of(this::throwException).recover(ex -> 2).getOrElse(1));
+
+
+//        Try.ofCallable(this::throwException)
+//                .onFailure(ex -> System.out.println("======="))
+//                .getOrElseThrow((Function<Throwable, RuntimeException>) RuntimeException::new);
+
+
+        System.out.println(Try.ofCallable(this::throwException)
+                .onFailure(throwable -> {
+                    throw new RuntimeException(throwable);
+                })
+                .getOrElse(99));
 
     }
 

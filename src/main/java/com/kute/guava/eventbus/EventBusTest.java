@@ -3,7 +3,7 @@ package com.kute.guava.eventbus;
 import com.kute.guava.eventbus.event.NoListenerEvent;
 import com.kute.guava.eventbus.event.OrderMessageEvent;
 import com.kute.guava.eventbus.event.PackMessageEvent;
-import com.kute.guava.eventbus.eventbus.MessageEventBus;
+import com.kute.guava.eventbus.send.MessageEventBus;
 import com.kute.guava.eventbus.listener.DeadEventListener;
 import com.kute.guava.eventbus.listener.OrderMessageListener;
 import com.kute.guava.eventbus.listener.PackMessageListener;

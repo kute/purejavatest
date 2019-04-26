@@ -1,4 +1,4 @@
-package com.kute.guava.eventbus.eventbus;
+package com.kute.guava.eventbus.send;
 
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;

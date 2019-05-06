@@ -1,6 +1,6 @@
 package com.kute.util.thread.eventbus;
 
-import com.kute.guava.FutureTest;
+import com.kute.google.guava.FutureTest;
 import com.kute.util.thread.eventbus.event.*;
 import com.kute.util.thread.eventbus.listener.NewListener;
 import com.kute.util.thread.eventbus.send.EventBusSender;

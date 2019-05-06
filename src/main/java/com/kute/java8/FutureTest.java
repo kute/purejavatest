@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * 4. anyOf: 是只要有一个任务完成
  *
  *
- * @see com.kute.guava.FutureTest   guava future
+ * @see com.kute.google.guava.FutureTest   guava future
  */
 public class FutureTest {
 

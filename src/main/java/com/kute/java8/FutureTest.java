@@ -9,21 +9,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * created by bailong001 on 2019/02/16 19:48
- *
+ * <p>
  * CompletableFuture
- *
+ * <p>
  * 1. supplyAsync: 用于有返回值的任务
  * 2. runAsync: 用于没有返回值的任务
  * 3. allOf: 是等待所有任务成功完成
  * 4. anyOf: 是只要有一个任务完成
- *
  *
  * @see com.kute.google.guava.FutureTest   guava future
  */
@@ -59,7 +57,7 @@ public class FutureTest {
                     LOGGER.info("thenRun");
                 })
                 .whenComplete((result, error) -> {
-                    if(null == error) {
+                    if (null == error) {
                         LOGGER.info("whenComplete normal:{}", result);
                     } else {
                         LOGGER.info("whenComplete error:{}", error.getClass().getName());
@@ -94,14 +92,21 @@ public class FutureTest {
                 .forEach(LOGGER::info);
         countDownLatch.await();
         LOGGER.info("take total:{}", stopwatch.elapsed(TimeUnit.SECONDS));
-
-
     }
 
     private String sleepFunction(String data) {
         if ("3".equalsIgnoreCase(data)) {
             throw new RuntimeException("RuntimeException");
         }
+        try {
+            TimeUnit.SECONDS.sleep(Integer.parseInt(data));
+        } catch (Exception e) {
+
+        }
+        return data + "-";
+    }
+
+    private String sleep(String data) {
         try {
             TimeUnit.SECONDS.sleep(Integer.parseInt(data));
         } catch (Exception e) {
@@ -128,7 +133,54 @@ public class FutureTest {
         // 获取任务结果，如果没有完成会一直阻塞等待
         String result = completableFuture.get();
         System.out.println("计算结果:" + result);
+
     }
 
+    /**
+     * 并行方式
+     */
+    @Test
+    public void test2() throws Exception {
+
+        LOGGER.info("=======");
+        // method-1
+        IntStream.rangeClosed(1, 5).boxed().parallel().forEach(i -> {
+            LOGGER.info("==={}", i);
+            sleep(i.toString());
+        });
+
+        //method-2
+        LOGGER.info("********");
+        List<CompletableFuture<String>> list = Lists.newArrayList(1, 2, 4)
+                .stream()
+                .map(i -> CompletableFuture.supplyAsync(() -> {
+                    LOGGER.info("******={}", i);
+                    sleep(i.toString());
+                    return i + "=";
+                }))
+                .collect(Collectors.toList());
+        CompletableFuture.allOf(list.toArray(new CompletableFuture[list.size()]))
+//                .get()
+                .join();
+        LOGGER.info("done");
+    }
+
+    /**
+     * 更改默认的parallelStream forkjoin大小
+     */
+    @Test
+    public void test3() throws InterruptedException, ExecutionException, TimeoutException {
+        // method-1
+//        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "300");
+
+        // method-2: 使用自己的forkjoin池
+        ForkJoinPool forkJoinPool = new ForkJoinPool(100);
+        forkJoinPool.submit(() -> {
+            return Lists.newArrayList(1, 2, 3)
+                    .parallelStream()
+                    .map(Integer::byteValue)
+                    .collect(Collectors.toList());
+        }).get(2, TimeUnit.SECONDS);
+    }
 
 }

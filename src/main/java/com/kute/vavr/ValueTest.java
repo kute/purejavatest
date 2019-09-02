@@ -33,6 +33,17 @@ public class ValueTest {
     }
 
     @Test
+    public void testMatch() {
+        String v = "1";
+        Match(v).of(
+                Case($(isIn("1", "2")), () -> {
+                    System.out.println("iiiii");
+                    return "test";
+                })
+        );
+    }
+
+    @Test
     public void testTry() {
 
         Integer result = Try.of(this::bunchOfWork)

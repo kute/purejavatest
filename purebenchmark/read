@@ -1,0 +1,36 @@
+1、http://openjdk.java.net/projects/code-tools/jmh/
+https://blog.csdn.net/yh_zeng2/article/details/83716888
+
+2、mavn生成beanchmark项目
+
+mvn archetype:generate \
+          -DinteractiveMode=false \
+          -DarchetypeGroupId=org.openjdk.jmh \
+          -DarchetypeArtifactId=jmh-java-benchmark-archetype \
+          -DgroupId=org.sample \
+          -DartifactId=test \
+          -Dversion=1.0
+
+artifactId: http://central.maven.org/maven2/org/openjdk/jmh/
+
+3、jmh sample
+http://hg.openjdk.java.net/code-tools/jmh/file/99d7b73cf1e3/jmh-samples/src/main/java/org/openjdk/jmh/samples
+
+4、现有项目使用
+
+拷贝依赖以及 maven-shade-plugin插件
+
+5、注解: org.openjdk.jmh.annotations
+
+@Benchmark: 只有标注此注解的方法才会被测试
+@BenchmarkMode: 测试模式，支持的模式有：
+             Throughput：吞吐量，每秒能够执行的次数
+             AverageTime：	平均时间，每次操作的平均耗时
+             SampleTime：	在测试中，随机进行采样执行的时间
+             SingleShotTime：	在每次执行中计算耗时
+             All：顾名思义，所有模式，这个在内部测试中常用
+@Fork：
+@State：状态对象，用于标记对象 是 线程共享对象  还是 线程独有（每个线程都各自有一份copy)
+       State.Benchmark：所有线程共享
+       State.Grouop: 所有在同一个grouop的线程共享
+       State.Thread: 每个线程独有一份copy

@@ -13,7 +13,7 @@ public class CuratorTest {
 
     public static void main(String[] args) throws Exception {
 
-        CuratorCreator creator = new CuratorCreator("zk02-test.lianjia.com:2181", "jichu:bdcccaccB9", "jichu3");
+        CuratorCreator creator = new CuratorCreator("", "", "");
 
         CuratorFramework client = creator.getClient();
 
